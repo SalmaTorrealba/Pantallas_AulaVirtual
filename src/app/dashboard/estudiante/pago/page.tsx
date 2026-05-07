@@ -1,128 +1,77 @@
 "use client";
 
-import { useState } from "react";
-import "./pago.css";
-import ConfigTopBar from "@/components/custom/ConfigTopBar";
-import "@/components/custom/ConfigTopBar.css";
+import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 export default function PagoPage() {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    apellidos: "",
-    email: "",
-    telefono: "",
-    password: "",
-    tarjetaNombre: "",
-    tarjetaNumero: "",
-    tarjetaFecha: "",
-    tarjetaCVC: "",
-  });
+  const [carrito, setCarrito] = useState([]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("carrito")) || [];
+    setCarrito(data);
+  }, []);
 
-  const finalizarPago = (e) => {
-    e.preventDefault();
+  const total = carrito.reduce((acc, c) => acc + c.precio, 0);
 
-    // Guardar usuario en localStorage (simulación)
-    localStorage.setItem("user", JSON.stringify(formData));
-
-    // Redirigir a confirmación
-    window.location.href = "/dashboard/estudiante/confirmacion";
+  const pagar = () => {
+    alert("Pago procesado correctamente ✔");
+    localStorage.removeItem("carrito");
   };
 
   return (
-    <>
-      <ConfigTopBar />
+    <div className={styles.wrapper}>
+      <h1 className={styles.title}>Pasarela de Pago</h1>
 
-      <div className="pago-page">
+      <div className={styles.layout}>
+        
+        {/* FORMULARIO DE TARJETA */}
+        <div className={styles.formCard}>
+          <h2 className={styles.subtitle}>Datos de Pago</h2>
 
-        {/* PASOS */}
-        <div className="pago-steps">
-          <span className="step active">1. Carrito</span>
-          <span className="step active">→ 2. Pago</span>
-          <span className="step">→ 3. Confirmación</span>
+          <div className={styles.field}>
+            <label>Nombre en la tarjeta</label>
+            <input type="text" className={styles.input} />
+          </div>
+
+          <div className={styles.field}>
+            <label>Número de tarjeta</label>
+            <input type="text" className={styles.input} placeholder="1234 5678 9012 3456" />
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label>Expiración</label>
+              <input type="text" className={styles.input} placeholder="MM/AA" />
+            </div>
+
+            <div className={styles.field}>
+              <label>CVC</label>
+              <input type="text" className={styles.input} placeholder="123" />
+            </div>
+          </div>
+
+          <button className={styles.btnPrimary} onClick={pagar}>
+            Pagar Ahora
+          </button>
         </div>
 
-        <div className="pago-layout">
+        {/* RESUMEN */}
+        <div className={styles.resumen}>
+          <h2 className={styles.subtitle}>Resumen del Pedido</h2>
 
-          {/* RESUMEN */}
-          <div className="pago-resumen">
-            <h2>RESUMEN DEL PEDIDO</h2>
-            <p><strong>Curso:</strong> EFICIENCIA ENERGÉTICA EN PLANTAS</p>
-            <p><strong>Precio:</strong> 29€</p>
-            <p><strong>Total:</strong> 29€</p>
+          {carrito.map((curso, i) => (
+            <div key={i} className={styles.resumenItem}>
+              <span>{curso.nombre}</span>
+              <span>€{curso.precio}</span>
+            </div>
+          ))}
+
+          <div className={styles.totalRow}>
+            <span>Total</span>
+            <span>€{total.toFixed(2)}</span>
           </div>
-
-          {/* FORMULARIO */}
-          <div className="pago-form">
-            <h2>Datos del estudiante y pago</h2>
-
-            <form onSubmit={finalizarPago}>
-
-              {/* DATOS DEL ESTUDIANTE */}
-              <h3 className="form-section-title">Datos personales</h3>
-
-              <div className="form-group">
-                <label>Nombre</label>
-                <input name="nombre" onChange={handleChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>Apellidos</label>
-                <input name="apellidos" onChange={handleChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" onChange={handleChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>Teléfono</label>
-                <input name="telefono" onChange={handleChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>Contraseña</label>
-                <input type="password" name="password" onChange={handleChange} required />
-              </div>
-
-              {/* DATOS DE TARJETA */}
-              <h3 className="form-section-title">Datos de pago</h3>
-
-              <div className="form-group">
-                <label>Nombre en la tarjeta</label>
-                <input name="tarjetaNombre" onChange={handleChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>Número de tarjeta</label>
-                <input name="tarjetaNumero" onChange={handleChange} required />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Fecha de caducidad (MM/AA)</label>
-                  <input name="tarjetaFecha" onChange={handleChange} required />
-                </div>
-
-                <div className="form-group">
-                  <label>CVC</label>
-                  <input name="tarjetaCVC" onChange={handleChange} required />
-                </div>
-              </div>
-
-              <button type="submit" className="btn-finalizar">
-                Finalizar pago (29€)
-              </button>
-
-            </form>
-          </div>
-
         </div>
       </div>
-    </>
+    </div>
   );
 }

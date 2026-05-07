@@ -1,55 +1,102 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./crear.module.css";
-import ProfesorTopBar from "@/components/profesor/ProfesorTopBar";
+import { useRouter } from "next/navigation";
+import styles from "./page.module.css";
 
 export default function CrearCurso() {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     titulo: "",
+    categoria: "",
+    duracion: "",
     descripcion: "",
-    precio: "",
-    imagen: null,
+    imagen: "",
   });
 
-  function handleChange(e: any) {
-    const { name, value, files } = e.target;
-    setForm({ ...form, [name]: files ? files[0] : value });
-  }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    console.log("Curso creado:", form);
-  }
+  const crearCurso = () => {
+    // Aquí podrías guardar en BD, pero por ahora solo redirigimos
+    router.push("/dashboard/profesor/cursos");
+  };
 
   return (
-    <div className={styles.page}>
-      <ProfesorTopBar/>
-      <h1 className={styles.title}>Crear Nuevo Curso</h1>
+    <div className={styles.background}>
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>Crear Curso</h1>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.group}>
-          <label>Título del curso</label>
-          <input type="text" name="titulo" onChange={handleChange} required />
+        <div className={styles.formGrid}>
+          <div className={styles.column}>
+            <div className={styles.field}>
+              <label>Título del Curso</label>
+              <input
+                type="text"
+                name="titulo"
+                value={form.titulo}
+                onChange={handleChange}
+                className={styles.input}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label>Categoría</label>
+              <select
+                name="categoria"
+                value={form.categoria}
+                onChange={handleChange}
+                className={styles.input}
+              >
+                <option value="">Seleccionar</option>
+                <option value="Seguridad">Seguridad</option>
+                <option value="Energía">Energía</option>
+                <option value="Primeros Auxilios">Primeros Auxilios</option>
+              </select>
+            </div>
+
+            <div className={styles.field}>
+              <label>Duración (horas)</label>
+              <input
+                type="number"
+                name="duracion"
+                value={form.duracion}
+                onChange={handleChange}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <div className={styles.column}>
+            <div className={styles.field}>
+              <label>Descripción</label>
+              <textarea
+                name="descripcion"
+                value={form.descripcion}
+                onChange={handleChange}
+                className={styles.textarea}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label>Imagen del Curso (URL)</label>
+              <input
+                type="text"
+                name="imagen"
+                value={form.imagen}
+                onChange={handleChange}
+                className={styles.input}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className={styles.group}>
-          <label>Descripción</label>
-          <textarea name="descripcion" rows={5} onChange={handleChange} required />
-        </div>
-
-        <div className={styles.group}>
-          <label>Precio (€)</label>
-          <input type="number" name="precio" onChange={handleChange} required />
-        </div>
-
-        <div className={styles.group}>
-          <label>Imagen del curso</label>
-          <input type="file" name="imagen" accept="image/*" onChange={handleChange} />
-        </div>
-
-        <button className={styles.btnCrear}>Crear Curso</button>
-      </form>
+        <button className={styles.btnPrimary} onClick={crearCurso}>
+          Crear Curso
+        </button>
+      </div>
     </div>
   );
 }

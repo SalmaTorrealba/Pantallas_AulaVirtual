@@ -1,192 +1,154 @@
 "use client";
-<<<<<<< HEAD
 
-import "./register.css";
-import { useState, type ChangeEvent, type FormEvent } from "react";
-=======
-import "./register.css";
 import { useState } from "react";
-import NavBar from "@/components/NavBar";
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
+import { useRouter } from "next/navigation";
+import "./register.css";
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    company: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const router = useRouter();
 
-<<<<<<< HEAD
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+
+  const [errors, setErrors] = useState({});
+
+  function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-=======
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  function validateForm() {
+    const newErrors = {};
+
+    if (!name.trim()) newErrors.name = "El nombre es obligatorio";
+    if (!validateEmail(email)) newErrors.email = "Correo inválido";
+    if (pass.length < 6) newErrors.pass = "La contraseña debe tener mínimo 6 caracteres";
+    if (pass !== confirm) newErrors.confirm = "Las contraseñas no coinciden";
+    if (!accepted) newErrors.accepted = "Debes aceptar los términos";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
+  function handleSubmit(e) {
     e.preventDefault();
-    alert("Registro enviado (falta conectar backend)");
+
+    if (validateForm()) {
+      console.log("Registro exitoso");
+
+      // Redirección automática al login
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 800);
+    }
   }
 
   return (
-    <>
-<<<<<<< HEAD
-      <div className="min-h-screen flex items-center justify-center register-background">
-        <div className="register-container bg-white shadow-lg rounded-lg p-10 w-full max-w-md">
-    <h2 className="register-title">CREA TU CUENTA</h2>
+    <div className="register-background">
+      <div className="register-card">
 
-<form onSubmit={handleSubmit} className="register-form">
+        <img
+          src="/logos/Logo-ingenieria.png"
+          className="register-logo"
+          alt="Logo"
+        />
 
-  <div>
-    <label className="register-label">NOMBRE COMPLETO</label>
-    <input
-      name="name"
-      type="text"
-      className="register-input"
-      placeholder="Ej. Juan Pérez"
-      onChange={handleChange}
-    />
-  </div>
+        <h2 className="register-title">Crear cuenta</h2>
 
-  <div>
-    <label className="register-label">CORREO ELECTRÓNICO</label>
-    <input
-      name="email"
-      type="email"
-      className="register-input"
-      placeholder="Ej. juan.perez@empresa.com"
-      onChange={handleChange}
-    />
-  </div>
+        <form className="register-form" onSubmit={handleSubmit}>
 
-  <div>
-    <label className="register-label">EMPRESA / ORGANIZACIÓN</label>
-    <input
-      name="company"
-      type="text"
-      className="register-input"
-      placeholder="(Opcional)"
-      onChange={handleChange}
-    />
-  </div>
+          {/* Nombre */}
+          <div>
+            <label className="register-label">Nombre completo</label>
+            <input
+              type="text"
+              className={`register-input ${errors.name ? "input-error" : ""}`}
+              placeholder="Tu nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {errors.name && <p className="error-text">{errors.name}</p>}
+          </div>
 
-  <div>
-    <label className="register-label">CONTRASEÑA</label>
-    <input
-      name="password"
-      type="password"
-      className="register-input"
-      onChange={handleChange}
-    />
-  </div>
+          {/* Email */}
+          <div>
+            <label className="register-label">Correo electrónico</label>
+            <input
+              type="email"
+              className={`register-input ${errors.email ? "input-error" : ""}`}
+              placeholder="usuario@ejemplo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {errors.email && <p className="error-text">{errors.email}</p>}
+          </div>
 
-  <div>
-    <label className="register-label">CONFIRMAR CONTRASEÑA</label>
-    <input
-      name="confirmPassword"
-      type="password"
-      className="register-input"
-      onChange={handleChange}
-    />
-  </div>
-
-  <div className="register-checkbox">
-    <input type="checkbox" />
-    <span>ACEPTO LOS TÉRMINOS Y CONDICIONES</span>
-  </div>
-
-  <button type="submit" className="register-button">
-    REGISTRARME
-  </button>
-
-</form>
-
-<div className="register-footer">
-  <a href="#">AYUDA</a> | <a href="#">SOPORTE</a>
-
-</div>
-        
-=======
-      <NavBar />
-
-     <div className="min-h-screen flex items-center justify-center register-background">
-        <div className="bg-white shadow-lg rounded-lg p-10 w-full max-w-md">
-
-          <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-            CREA TU CUENTA
-          </h2>
-
-          <form onSubmit={handleSubmit} className="register-form">
-
-            <div>
-              <label className="register-label">NOMBRE COMPLETO</label>
+          {/* Contraseña */}
+          <div>
+            <label className="register-label">Contraseña</label>
+            <div className="password-wrapper">
               <input
-                name="name"
-                type="text"
-                className="register-input"
-                onChange={handleChange}
+                type={showPass ? "text" : "password"}
+                className={`register-input ${errors.pass ? "input-error" : ""}`}
+                placeholder="********"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
               />
+              <span
+                className="toggle-pass"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? "🙈" : "👁️"}
+              </span>
             </div>
+            {errors.pass && <p className="error-text">{errors.pass}</p>}
+          </div>
 
-            <div>
-              <label className="register-label">CORREO ELECTRÓNICO</label>
+          {/* Confirmación */}
+          <div>
+            <label className="register-label">Confirmar contraseña</label>
+            <div className="password-wrapper">
               <input
-                name="email"
-                type="email"
-                className="register-input"
-                onChange={handleChange}
+                type={showConfirm ? "text" : "password"}
+                className={`register-input ${errors.confirm ? "input-error" : ""}`}
+                placeholder="********"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
               />
+              <span
+                className="toggle-pass"
+                onClick={() => setShowConfirm(!showConfirm)}
+              >
+                {showConfirm ? "🙈" : "👁️"}
+              </span>
             </div>
+            {errors.confirm && <p className="error-text">{errors.confirm}</p>}
+          </div>
 
-            <div>
-              <label className="register-label">EMPRESA / ORGANIZACIÓN</label>
-              <input
-                name="company"
-                type="text"
-                className="register-input"
-                onChange={handleChange}
-              />
-            </div>
+          {/* Términos */}
+          <div className="terms-box">
+            <input
+              type="checkbox"
+              checked={accepted}
+              onChange={(e) => setAccepted(e.target.checked)}
+            />
+            <span>Acepto los términos y condiciones</span>
+          </div>
+          {errors.accepted && <p className="error-text">{errors.accepted}</p>}
 
-            <div>
-              <label className="register-label">CONTRASEÑA</label>
-              <input
-                name="password"
-                type="password"
-                className="register-input"
-                onChange={handleChange}
-              />
-            </div>
+          <button type="submit" className="register-btn">
+            Registrarme
+          </button>
 
-            <div>
-              <label className="register-label">CONFIRMAR CONTRASEÑA</label>
-              <input
-                name="confirmPassword"
-                type="password"
-                className="register-input"
-                onChange={handleChange}
-              />
-            </div>
+        </form>
 
-            <button
-              type="submit"
-              className="w-full bg-[#F57C00] hover:bg-[#EF6C00] text-white font-semibold py-2 rounded-md transition"
-            >
-              REGISTRARME
-            </button>
-
-          </form>
-
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
-        </div>
       </div>
-    </>
+    </div>
   );
 }

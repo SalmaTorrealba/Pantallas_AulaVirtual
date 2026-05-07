@@ -1,21 +1,15 @@
-"use client";
-
-
+import StudentSidebar from "@/components/students/StudentSidebar";
 import StudentTopBar from "@/components/students/StudentTopBar";
-import "./estudiante-layout.css";
+import styles from "./layout.module.css";
 
-interface EstudianteLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function EstudianteLayout({ children }: EstudianteLayoutProps) {
+export default function StudentLayout({ children }) {
   return (
-    <div className="estudiante-layout">
+    <div className={styles.layout}>
+      <StudentSidebar />
 
-
-      <div className="estudiante-main">
-       
-        <div className="estudiante-content">{children}</div>
+      <div className={styles.main}>
+        <StudentTopBar />
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   );

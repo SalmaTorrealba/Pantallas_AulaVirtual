@@ -1,6 +1,6 @@
-/* ============================
+/* 
    CONTENEDOR GENERAL
-============================ */
+ */
 .page {
   padding: 30px 40px;
  background-image: url("/img/Fondo-Login.jpg");
@@ -18,9 +18,9 @@
   gap: 40px;
 }
 
-/* ============================
+/* 
    TABLA DE PROYECTOS
-============================ */
+ */
 .tableWrapper {
   width: 60%;
 }
@@ -94,9 +94,9 @@
   background: #ff8f2a;
 }
 
-/* ============================
+/* 
    PANEL DE DETALLES
-============================ */
+ */
 .details {
   width: 40%;
   background: white;

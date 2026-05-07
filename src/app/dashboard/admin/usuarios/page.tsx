@@ -35,7 +35,10 @@ export default function UsuariosPage() {
                 <td>usuario@correo.com</td>
                 <td>Admin</td>
                 <td>
-                  <button className={styles.btnEdit}>Editar</button>
+                <a href={"/dashboard/admin/usuarios/editar"} className={styles.btnEdit}>
+                Editar
+                </a>
+
                   <button className={styles.btnDelete}>Eliminar</button>
                 </td>
               </tr>

@@ -1,74 +1,112 @@
+:root {
+  --primary: #F26522;
+  --primary-dark: #D9571D;
+
+  --gray-50: #FAFAF9;
+  --gray-200: #E6E5E1;
+  --gray-600: #525049;
+  --gray-800: #1C1B14;
+}
+
+/* Topbar */
 .admin-topbar {
   width: 100%;
-  height: 60px;
-  background: #fff;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0 30px;
-  border-bottom: 1px solid #e5e5e5;
-  position: relative;
+  position: sticky;
   top: 0;
   z-index: 20;
-  font-family: "Segoe UI", sans-serif;
 }
-
-/* Menu superior */
-
-.admin-topbar-menu {
+.admin-layout {
   display: flex;
-  gap: 30px;
-  font-size: 14px;
-  font-weight: 600;
+  min-height: 100vh;
+  background-image: url("/img/Fondo-Login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.admin-topbar-menu a {
-  text-decoration: none;
-  color: #444;
-  transition: color 0.2s ease;
-  position: relative;
-}
 
-.admin-topbar-menu a:hover {
-  color: #d17a00;
-}
-
-.admin-topbar-menu a.active {
-  color: #d17a00;
-}
-
-/* Perfil */
-
-.admin-topbar-profile {
+.admin-topbar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  position: relative;
   cursor: pointer;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
+.admin-user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.admin-user-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.admin-user-role {
+  font-size: 13px;
+  color: var(--gray-600);
+}
+
+.admin-avatar {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: #dc8a0e;
+  object-fit: cover;
+  border: 2px solid var(--primary);
 }
 
-.arrow {
-  width: 18px;
-  height: 18px;
-  stroke-width: 2;
-  stroke: #666;
-}
-.admin-topbar {
-  margin-bottom: 0; /* asegura que no “empuje” el contenido */
-}
-.admin-topbar::after {
-  content: "";
+/* Dropdown */
+.admin-dropdown {
   position: absolute;
-  right: 30px;
-  bottom: 0;
-  height: 3px;
-  width: 50px;
-  border-radius: 2px;
+  top: 60px;
+  right: 0;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 10px 0;
+  width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  animation: fadeIn 0.15s ease-in-out;
 }
 
+.admin-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--gray-800);
+  text-decoration: none;
+  transition: 0.2s;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-dropdown-item:hover {
+  background: var(--gray-50);
+}
+
+.logout {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.logout:hover {
+  background: rgba(242, 101, 34, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

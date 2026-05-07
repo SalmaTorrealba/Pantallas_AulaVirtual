@@ -1,155 +1,120 @@
-/* ----------------------------- */
-/* CONTENEDOR GENERAL */
-/* ----------------------------- */
+:root {
+  --primary: #F26522;
+  --primary-dark: #D9571D;
 
-.dashboard {
-  padding: 30px;
-  background: transparent; /* antes gris, ahora deja ver el mapa */
-  font-family: "Segoe UI", sans-serif;
+  --gray-50: #FAFAF9;
+  --gray-200: #E6E5E1;
+  --gray-600: #525049;
+  --gray-800: #1C1B14;
+}
+
+/* Layout general */
+.admin-layout {
+  display: flex;
   min-height: 100vh;
+  background-image: url("/img/Fondo-Login.jpg");
+  padding:6px;
 }
 
-/* ----------------------------- */
-/* TÍTULO */
-/* ----------------------------- */
+/* Sidebar minimalista */
+.sidebar {
+  width: 220px;
+  padding: 30px 20px;
+  background: white;
+  border-right: 1px solid var(--gray-200);
+}
 
-.dashboard-title {
+.sidebar-logo {
   font-size: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  color: #333;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 30px;
 }
 
-/* ----------------------------- */
-/* LAYOUT PRINCIPAL DEL DASHBOARD */
-/* ----------------------------- */
-
-.dashboard-layout {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr; /* IZQUIERDA TARJETAS — DERECHA GRÁFICA */
-  gap: 30px;
-  align-items: start;
-}
-
-.dashboard-left {
+.sidebar-menu {
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
-/* ----------------------------- */
-/* TARJETAS */
-/* ----------------------------- */
-
-.dashboard-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas fijas */
-  gap: 22px;
-  margin-bottom: 40px;
+.sidebar-item {
+  font-size: 15px;
+  color: var(--gray-600);
+  text-decoration: none;
+  padding: 6px 0;
+  transition: 0.2s;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-left: 4px solid transparent;
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  border-left-color: #f57c00;
-}
-
-/* Icono principal */
-.card-icon {
-  font-size: 40px;
-  color: #f57c00;
-  margin-right: 16px;
+.sidebar-item:hover {
+  color: var(--primary);
 }
 
 /* Contenido */
-.card-content h3 {
-  font-size: 13px;
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* Títulos */
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--gray-800);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 40px;
+  font-size: 20px;
   font-weight: 600;
-  color: #444;
-  margin-bottom: 5px;
+  color: var(--gray-800);
 }
 
-.value {
-  font-size: 22px;
-  font-weight: 700;
-  color: #000;
+/* Tarjetas */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.subtext {
-  font-size: 12px;
-  color: #777;
-}
-
-/* Mini gráfica dentro de la tarjeta */
-.card-mini-chart {
-  position: absolute;
-  right: 18px;
-  top: 25%;
-  width: 60px;
-  height: 30px;
-  opacity: 0.9;
-}
-
-/* ----------------------------- */
-/* GRÁFICA PRINCIPAL */
-/* ----------------------------- */
-
-.dashboard-chart {
+.stat {
   background: white;
-  padding: 25px;
+  padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--gray-200);
 }
 
-.dashboard-chart h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #333;
+.stat-label {
+  font-size: 14px;
+  color: var(--gray-600);
 }
 
-.dashboard-chart img {
-  width: 100%;
+.stat-value {
+  display: block;
+  margin-top: 8px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+/* Acciones rápidas */
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.action {
+  background: var(--primary);
+  color: white;
+  padding: 12px 20px;
   border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-/* ----------------------------- */
-/* LAYOUT ADMIN */
-/* ----------------------------- */
-
-.admin-container {
-  display: flex;
-  min-height: 100vh;
-  background-image:url(/img/Fondo-Login.jpg); /* antes gris, ahora deja ver el mapa */
-}
-
-.admin-sidebar {
-  width: 260px;
-  background: #fff;
-  border-right: 1px solid #ddd;
-}
-
-.admin-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-content {
-  flex: 1;
-  padding: 25px 40px;
-  background: transparent; /* antes blanco, ahora deja ver el mapa */
+.action:hover {
+  background: var(--primary-dark);
 }

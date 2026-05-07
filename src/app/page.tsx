@@ -1,73 +1,67 @@
-<<<<<<< HEAD
 "use client";
 
-import "./inicio.css";
+import "./home.css";
+import { useRouter } from "next/navigation";
 
-export default function InicioPage() {
+export default function HomePage() {
+  const router = useRouter();
+
   return (
-    <div className="inicio-page">
+    <div className="home-container">
+
+      {/* HEADER */}
+      <header className="home-header">
+  <div className="logo-container">
+<img src="/logos/Logo-ingenieria.png" className="login-logo" alt="Logo" />
+    <span className="logo-text">Aula Virtual</span>
+  </div>
+
+  <button className="login-btn" onClick={() => router.push("/auth/login")}>
+    Iniciar sesión
+  </button>
+</header>
+
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-content">
-          <h1>FORMACIÓN TÉCNICA ESPECIALIZADA EN INGENIERÍA</h1>
-          <a href="/dashboard/estudiante/catalogo" className="btn-hero">
-            VER CATÁLOGO
-          </a>
+        <h1 className="hero-title">Tu plataforma de aprendizaje moderna y eficiente</h1>
+        <p className="hero-subtitle">
+          Cursos, evaluaciones, tutorías y seguimiento académico en un solo lugar.
+        </p>
+
+        <button className="cta-btn" onClick={() => router.push("/auth/register")}>
+          Comenzar ahora
+        </button>
+      </section>
+
+      {/* BENEFICIOS */}
+      <section className="benefits">
+        <div className="benefit-card">
+          <h3>📚 Aprende a tu ritmo</h3>
+          <p>Accede a tus cursos desde cualquier dispositivo.</p>
+        </div>
+
+        <div className="benefit-card">
+          <h3>📝 Evaluaciones claras</h3>
+          <p>Exámenes, tareas y calificaciones organizadas.</p>
+        </div>
+
+        <div className="benefit-card">
+          <h3>🤝 Tutorías personalizadas</h3>
+          <p>Comunicación directa con tutores y profesores.</p>
+        </div>
+
+        <div className="benefit-card">
+          <h3>📊 Seguimiento en tiempo real</h3>
+          <p>Visualiza tu progreso y rendimiento académico.</p>
         </div>
       </section>
 
-      {/* CURSOS DESTACADOS */}
-      <section className="destacados">
-        <h2 className="destacados-title">CURSOS DESTACADOS</h2>
+      {/* FOOTER */}
+      <footer className="home-footer">
+        © {new Date().getFullYear()} Aula Virtual — Todos los derechos reservados
+      </footer>
 
-        <div className="destacados-grid">
-          <div className="curso-card">
-            <img src="/img/curso1.jpg" alt="Curso" />
-            <h3>SEGURIDAD INDUSTRIAL AVANZADA</h3>
-            <p className="precio">$29.00</p>
-            <a href="/dashboard/estudiante/catalogo" className="btn-card">
-              MATRICULARME
-            </a>
-          </div>
-
-          <div className="curso-card">
-            <img src="/img/curso2.jpg" alt="Curso" />
-            <h3>EFICIENCIA ENERGÉTICA EN PLANTAS</h3>
-            <p className="precio">$29.00</p>
-            <a href="/dashboard/estudiante/catalogo" className="btn-card">
-              MATRICULARME
-            </a>
-          </div>
-
-          <div className="curso-card">
-            <img src="/img/curso3.jpg" alt="Curso" />
-            <h3>EFICIENCIA ENERGÉTICA EN PLANTAS</h3>
-            <p className="precio">$29.00</p>
-            <a href="/dashboard/estudiante/catalogo" className="btn-card">
-              MATRICULARME
-            </a>
-          </div>
-
-          <div className="curso-card">
-            <img src="/img/curso4.jpg" alt="Curso" />
-            <h3>EFICIENCIA ENERGÉTICA EN PLANTAS</h3>
-            <p className="precio">$29.00</p>
-            <a href="/dashboard/estudiante/catalogo" className="btn-card">
-              MATRICULARME
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
-=======
-export default function Home() {
-  return (
-    <main className="flex items-center justify-center h-screen">
-      <h1 className="text-red-500 text-4xl font-bold">Aula Virtual</h1>
-    </main>
-  );
-}
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46

@@ -1,48 +1,55 @@
-"use client";
-
+import styles from "./page.module.css";
 import Link from "next/link";
-import styles from "./cursos.module.css";
 
 export default function CursosProfesor() {
   const cursos = [
     {
       id: 1,
-      titulo: "Curso de Energía Solar",
-      descripcion: "Aprende diseño fotovoltaico profesional.",
-      imagen: "/img/curso-1.jpg",
+      titulo: "Seguridad Industrial Avanzada",
+      alumnos: 32,
+      imagen: "/img/curso1.jpg",
     },
     {
       id: 2,
-      titulo: "Curso de Termodinámica",
-      descripcion: "Fundamentos del ciclo Rankine y análisis térmico.",
-      imagen: "/img/curso-2.jpg",
+      titulo: "Eficiencia Energética en Plantas",
+      alumnos: 21,
+      imagen: "/img/curso2.jpg",
+    },
+    {
+      id: 3,
+      titulo: "Primeros Auxilios",
+      alumnos: 18,
+      imagen: "/img/curso3.jpg",
     },
   ];
 
   return (
-    <div className={styles.page}>
-      <h1 className={styles.title}>Mis Cursos</h1>
-
+    <div className={styles.wrapper}>
       <div className={styles.header}>
-        <Link href="/dashboard/profesor/cursos/crear" className={styles.btnNuevo}>
-          Crear nuevo curso
+        <h1 className={styles.title}>Mis Cursos</h1>
+
+        <Link href="/dashboard/profesor/cursos/crear" className={styles.btnPrimary}>
+          + Crear Curso
         </Link>
       </div>
 
       <div className={styles.grid}>
         {cursos.map((curso) => (
           <div key={curso.id} className={styles.card}>
-            <img src={curso.imagen} alt={curso.titulo} className={styles.img} />
+            <div
+              className={styles.image}
+              style={{ backgroundImage: `url(${curso.imagen})` }}
+            />
 
             <div className={styles.info}>
-              <h3>{curso.titulo}</h3>
-              <p>{curso.descripcion}</p>
+              <h3 className={styles.courseTitle}>{curso.titulo}</h3>
+              <p className={styles.meta}>{curso.alumnos} alumnos</p>
 
               <Link
                 href={`/dashboard/profesor/cursos/${curso.id}`}
-                className={styles.btnVer}
+                className={styles.btnSecondary}
               >
-                Ver curso
+                Gestionar
               </Link>
             </div>
           </div>

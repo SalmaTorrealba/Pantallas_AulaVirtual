@@ -1,118 +1,49 @@
-"use client";
-
-<<<<<<< HEAD
-import React from "react";
-import "./profesor.css";
-import dynamic from "next/dynamic";
-
-import ProfesorSidebar from "@/components/profesor/ProfesorSidebar";
-import ProfesorTopBar from "@/components/profesor/ProfesorTopBar";
-
-const ProgresoChart = dynamic(() => import("./ProgresoChart"), {
-  ssr: false,
-});
-
-import {
-  FaBookOpen,
-  FaUserFriends,
-  FaClipboardCheck,
-  FaStar,
-} from "react-icons/fa";
+import styles from "./page.module.css";
 
 export default function ProfesorDashboard() {
   return (
-    <div className="profesor-page">
-      {/* SIDEBAR FIJO */}
-      <ProfesorSidebar />
+    <div className={styles.wrapper}>
+      <h1 className={styles.title}>Dashboard</h1>
 
-      {/* ZONA PRINCIPAL */}
-      <div className="profesor-main">
-        <ProfesorTopBar />
+      {/* MÉTRICAS */}
+      <div className={styles.metrics}>
+        <div className={styles.metric}>
+          <span className={styles.value}>5</span>
+          <span className={styles.label}>Cursos</span>
+        </div>
 
-        <div className="dashboard-layout">
-          {/* COLUMNA IZQUIERDA */}
-          <div className="dashboard-left">
-            <h1 className="dashboard-title">Panel del Profesor</h1>
+        <div className={styles.metric}>
+          <span className={styles.value}>17</span>
+          <span className={styles.label}>Alumnos</span>
+        </div>
 
-            <div className="dashboard-cards">
-              <DashboardCard
-                icon={<FaBookOpen className="card-icon" />}
-                title="CURSOS IMPARTIDOS"
-                value="5"
-                subtext="Cursos activos"
-              />
+        <div className={styles.metric}>
+          <span className={styles.value}>3</span>
+          <span className={styles.label}>Entregas</span>
+        </div>
 
-              <DashboardCard
-                icon={<FaUserFriends className="card-icon" />}
-                title="ALUMNOS ACTIVOS"
-                value="17"
-                subtext="Estudiantes totales"
-              />
+        <div className={styles.metric}>
+          <span className={styles.value}>4.8 ⭐</span>
+          <span className={styles.label}>Valoración</span>
+        </div>
+      </div>
 
-              <DashboardCard
-                icon={<FaClipboardCheck className="card-icon" />}
-                title="ENTREGAS PENDIENTES"
-                value="0"
-                subtext="Por corregir"
-              />
+      {/* SECCIONES */}
+      <div className={styles.grid}>
+        <div className={styles.card}>
+          <h2>Progreso General</h2>
+          <div className={styles.placeholder}>Gráfica</div>
+        </div>
 
-              <DashboardCard
-                icon={<FaStar className="card-icon" />}
-                title="VALORACIÓN MEDIA"
-                value="4.8"
-                subtext="Promedio general"
-              />
-            </div>
-          </div>
-
-          {/* COLUMNA DERECHA — GRÁFICA */}
-          <div className="dashboard-chart">
-            <h2>Progreso de Alumnos por Curso</h2>
-            <ProgresoChart />
+        <div className={styles.card}>
+          <h2>Últimas Entregas</h2>
+          <div className={styles.list}>
+            <p>Carlos Ruiz — Seguridad Industrial</p>
+            <p>María López — Eficiencia Energética</p>
+            <p>Javier Peña — Primeros Auxilios</p>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-type DashboardCardProps = {
-  icon: React.ReactNode;
-  title: string;
-  value: string | number;
-  subtext: string;
-};
-
-function DashboardCard({ icon, title, value, subtext }: DashboardCardProps) {
-  return (
-    <div className="card">
-      <div className="card-header">
-        {icon}
-        <div className="card-content">
-          <h3>{title}</h3>
-          <p className="value">{value}</p>
-          <p className="subtext">{subtext}</p>
-        </div>
-      </div>
-=======
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/useUserStore";
-
-export default function ProfesorDashboard() {
-  const router = useRouter();
-  const { role } = useUserStore();
-
-  useEffect(() => {
-    if (role && role !== "profesor") {
-      router.push(`/dashboard/${role}`);
-    }
-  }, [role, router]);
-
-  return (
-    <div>
-      <h1>Panel de Profesor</h1>
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
     </div>
   );
 }

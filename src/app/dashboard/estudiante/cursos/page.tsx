@@ -1,54 +1,59 @@
 "use client";
 
-import StudentTopBar from "@/components/students/StudentTopBar";
-import CourseCard from "@/components/students/CourseCard";
-import "./cursos.css";
+import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 
-export default function CursosEstudiantePage() {
+export default function CursosPage() {
   const router = useRouter();
 
-  const cursosEstudiante = [
+  const cursos = [
     {
-      id: "c1",
-      title: "SEGURIDAD INDUSTRIAL AVANZADA",
-      progress: 68,
-      img: "/img/curso1.jpg",
+      id: 1,
+      nombre: "Seguridad Industrial Avanzada",
+      precio: 49.99,
+      profesor: "Ing. Carlos López",
+      imagen: "/curso1.jpg",
     },
     {
-      id: "c2",
-      title: "EFICIENCIA ENERGÉTICA EN PLANTAS",
-      progress: 68,
-      img: "/img/curso2.jpg",
-    },
-    {
-      id: "c3",
-      title: "AUTOMATIZACIÓN INDUSTRIAL",
-      progress: 65,
-      img: "/img/curso3.jpg",
+      id: 2,
+      nombre: "Primeros Auxilios",
+      precio: 39.99,
+      profesor: "Lic. Andrea Ruiz",
+      imagen: "/curso2.jpg",
     },
   ];
 
+  const comprarCurso = (curso) => {
+    // Guardar en localStorage
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(curso);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    // Redirigir a la cesta
+    router.push("/dashboard/estudiante/cesta");
+  };
+
   return (
-    <div className="student-dashboard">
-      <div className="student-content">
-        <StudentTopBar />
+    <div className={styles.wrapper}>
+      <h1 className={styles.title}>Cursos Disponibles</h1>
 
-        <h2 className="page-title">Mis Cursos</h2>
+      <div className={styles.grid}>
+        {cursos.map((curso) => (
+          <div key={curso.id} className={styles.card}>
+            <img src={curso.imagen} className={styles.img} />
 
-        <div className="courses-grid">
-          {cursosEstudiante.map((curso) => (
-            <CourseCard
-              key={curso.id}
-              title={curso.title}
-              progress={curso.progress}
-              img={curso.img}
-              onContinue={() =>
-                router.push(`/dashboard/estudiante/curso/${curso.id}`)
-              }
-            />
-          ))}
-        </div>
+            <h3 className={styles.cardTitle}>{curso.nombre}</h3>
+            <p className={styles.text}>Profesor: {curso.profesor}</p>
+            <p className={styles.precio}>€{curso.precio}</p>
+
+            <button
+              className={styles.btnPrimary}
+              onClick={() => comprarCurso(curso)}
+            >
+              Comprar
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

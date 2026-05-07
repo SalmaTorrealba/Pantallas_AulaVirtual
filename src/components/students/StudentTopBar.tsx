@@ -1,38 +1,25 @@
 "use client";
 
-import StudentMenu from "./StudentMenu";
-import { useUserStore } from "@/store/useUserStore";
-import { useRouter } from "next/navigation";
-import "./student-topbar.css";
+import { useState } from "react";
+import styles from "./StudentTopBar.module.css";
 
 export default function StudentTopBar() {
-  const router = useRouter();
-  const user = useUserStore((state) => state.user);
-
-  function goLogin() {
-    router.push("/auth/login");
-  }
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="student-topbar">
-      <div className="student-topbar-inner">
-        <nav className="top-nav">
-          <a href="/dashboard/estudiante">INICIO</a>
-          <a href="/dashboard/estudiante/mis-cursos">MIS CURSOS</a>
-          <a href="/dashboard/estudiante/cursos">CURSOS</a>
-          <a href="/dashboard/estudiante/mi-area">MI ÁREA</a>
-          <a href="/dashboard/estudiante/catalogo">CATALOGO</a>
-        </nav>
+    <header className={styles.topbar}>
+      <h2 className={styles.title}>Bienvenida, Samara</h2>
 
-        <div className="topbar-right">
-          {user ? (
-            <StudentMenu userName={user.name} />
-          ) : (
-            <button className="login-btn" onClick={goLogin}>
-              Iniciar sesión
-            </button>
-          )}
-        </div>
+      <div className={styles.userSection} onClick={() => setOpen(!open)}>
+        <span className={styles.name}>Samara</span>
+        <img src="/avatars/usuario.svg" className={styles.avatar} />
+
+        {open && (
+          <div className={styles.menu}>
+            <a href="/dashboard/estudiante/perfil">Mi Perfil</a>
+            <a href="/auth/login" className={styles.login}>Cerrar Sesión</a>
+          </div>
+        )}
       </div>
     </header>
   );

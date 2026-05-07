@@ -1,121 +1,40 @@
 "use client";
 
-<<<<<<< HEAD
-import React from "react";
-import "./admin.css";
-import dynamic from "next/dynamic";
-
-const IngresosChart = dynamic(() => import("./IngresosChart"), {
-  ssr: false,
-});
-
-import {
-  FaBookOpen,
-  FaDollarSign,
-  FaFolderOpen,
-  FaUserFriends,
-} from "react-icons/fa";
+import AdminTopBar from "@/components/admin/AdminTopBar";
 
 export default function AdminDashboard() {
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard">
+      <AdminTopBar />
+      <h1 className="title">Panel del Administrador</h1>
 
-      {/* COLUMNA IZQUIERDA */}
-      <div className="dashboard-left">
+      {/* Tarjetas de estadísticas */}
+      <div className="stats">
+        <div className="stat">
+          <span className="stat-label">Usuarios registrados</span>
+          <span className="stat-value">1,245</span>
+        </div>
 
-        {/* TÍTULO */}
-        <h1 className="dashboard-title">Dashboard de Administrador</h1>
+        <div className="stat">
+          <span className="stat-label">Cursos activos</span>
+          <span className="stat-value">32</span>
+        </div>
 
-        {/* TARJETAS */}
-        <div className="dashboard-cards">
-
-          <DashboardCard
-            icon={<FaDollarSign className="card-icon" />}
-            title="INGRESOS TOTALES (€)"
-            value="€0"
-            subtext="Totales del mes"
-          />
-
-          <DashboardCard
-            icon={<FaUserFriends className="card-icon" />}
-            title="USUARIOS ACTIVOS"
-            value="0"
-            subtext="Usuarios registrados"
-          />
-
-          <DashboardCard
-            icon={<FaFolderOpen className="card-icon" />}
-            title="PROYECTOS ENTREGADOS"
-            value="0"
-            subtext="Durante este mes"
-          />
-
-          <DashboardCard
-            icon={<FaBookOpen className="card-icon" />}
-            title="CURSOS PUBLICADOS"
-            value="0"
-            subtext="Cursos disponibles"
-          />
-
+        <div className="stat">
+          <span className="stat-label">Empresas asociadas</span>
+          <span className="stat-value">14</span>
         </div>
       </div>
 
-      {/* COLUMNA DERECHA — GRÁFICA */}
-      <div className="dashboard-chart">
-        <h2>Tendencia de Ingresos Mensuales</h2>
-        <IngresosChart />
+      {/* Acciones rápidas */}
+      <h2 className="subtitle">Acciones rápidas</h2>
+
+      <div className="actions">
+        <a href="/dashboard/admin/cursos/crear" className="action">Crear curso</a>
+       <a href="/dashboard/admin/usuarios/crear" className="action">+ Crear Usuarios</a>
+        <a href="/dashboard/admin/pagos" className="action">Ver finanzas</a>
       </div>
 
-    </div>
-  );
-}
-
-/* -------------------------------------- */
-/* COMPONENTE TARJETA */
-/* -------------------------------------- */
-
-type DashboardCardProps = {
-  icon: React.ReactNode;
-  title: string;
-  value: string | number;
-  subtext: string;
-  miniChart?: string; // opcional
-};
-
-function DashboardCard({ icon, title, value, subtext, miniChart }: DashboardCardProps) {
-  return (
-    <div className="card">
-      <div className="card-header">
-        {icon}
-        <div className="card-content">
-          <h3>{title}</h3>
-          <p className="value">{value}</p>
-          <p className="subtext">{subtext}</p>
-        </div>
-      </div>
-
-      {miniChart && (
-        <img src={miniChart} alt="mini chart" className="card-mini-chart" />
-      )}
-=======
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/useUserStore";
-
-export default function AdminDashboard() {
-  const router = useRouter();
-  const { role } = useUserStore();
-
-  useEffect(() => {
-    if (role && role !== "admin") {
-      router.push(`/dashboard/${role}`);
-    }
-  }, [role, router]);
-
-  return (
-    <div>
-      <h1>Dashboard Admin</h1>
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
     </div>
   );
 }

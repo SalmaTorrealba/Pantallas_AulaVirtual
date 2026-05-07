@@ -1,21 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import "./student-dark-sidebar.css";
+import styles from "./student-sidebar.module.css";
 
 export default function StudentSidebar() {
   return (
-    <aside className="student-sidebar">
-      <div className="sidebar-title">ESTUDIANTE</div>
+    <aside className={styles.sidebar}>
+      <h2 className={styles.logo}>🎓 Estudiante</h2>
 
-      <nav className="sidebar-nav">
-        <Link href="/dashboard/estudiante" className="sidebar-link">🏠 Inicio</Link>
-        <Link href="/dashboard/estudiante/mis-cursos" className="sidebar-link">📚 Mis Cursos</Link>
-        <Link href="/dashboard/estudiante/mi-area" className="sidebar-link">🗂 Mi Área</Link>
-        <Link href="/dashboard/estudiante/mi-perfil" className="sidebar-link">👤 Mi Perfil</Link>
-        <Link href="/dashboard/estudiante/catalogo" className="sidebar-link">Catálogo</Link>
-        <Link href="/dashboard/estudiante/recursos" className="sidebar-link">Recursos</Link>
-        <Link href="/auth/inicio" className="sidebar-link logout">Cerrar sesión</Link>
+      <nav className={styles.menu}>
+        <a href="/dashboard/estudiante" className={styles.item}>🏠 Inicio</a>
+        <a href="/dashboard/estudiante/cursos" className={styles.item}>📚 Cursos</a>
+        <a href="/dashboard/estudiante/mis-cursos" className={styles.item}>📚 Mis Cursos</a>
+        <a href="/dashboard/estudiante/examenes" className={styles.item}>📝 Exámenes</a>
+        <a href="/dashboard/estudiante/tareas" className={styles.item}>📌 Tareas</a>
+        <a href="/dashboard/estudiante/chat" className={styles.item}>💬 Chat</a>
+        <a href="/dashboard/estudiante/tutorias" className={styles.item}>👨‍🏫 Tutorías</a>
+        <a href="/dashboard/estudiante/certificados" className={styles.item}>📜 Certificados</a>
       </nav>
     </aside>
   );

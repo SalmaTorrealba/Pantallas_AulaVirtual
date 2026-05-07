@@ -1,73 +1,66 @@
-"use client";
-import "./mis-cursos.css";
-import StudentTopBar from "@/components/students/StudentTopBar";
-import CourseCard from "@/components/students/CourseCard";
-import ProgressBar from "@/components/students/ProgressBar";
-import { useRouter } from "next/navigation";
+import styles from "./page.module.css";
 
-const cursosMock = [
-  { id: "c1", title: "SEGURIDAD INDUSTRIAL AVANZADA", progress: 68, price: "28€", img: "/img/curso-1.jpg" },
-  { id: "c2", title: "EFICIENCIA ENERGÉTICA EN PLANTAS", progress: 68, price: "28€", img: "/img/curso-1.jpg" },
-  { id: "c3", title: "AUTOMATIZACIÓN INDUSTRIAL", progress: 65, price: "29€", img: "/img/curso-1.jpg" },
-];
-
-export default function EstudianteDashboard() {
-  const router = useRouter();
-  const cursoActual = cursosMock[0];
-
-  function handleContinuar(cursoId: string) {
-    router.push(`/dashboard/estudiante/curso/${cursoId}/leccion`);
-  }
+export default function CursoPage() {
+  const curso = {
+    titulo: "Seguridad Industrial Avanzada",
+    progreso: 65,
+    notaMedia: 8.4,
+    tareasPendientes: 2,
+  };
 
   return (
-    <div className="student-layout">
-  
+    <div className={styles.wrapper}>
+      
+      {/* MÉTRICAS DEL CURSO */}
+      <div className={styles.metrics}>
+        <div className={styles.metricCard}>
+          <h3 className={styles.metricValue}>{curso.notaMedia}</h3>
+          <p className={styles.metricLabel}>Nota Media</p>
+        </div>
 
-      <div className="student-content">
-        <StudentTopBar userName="Samara" />
+        <div className={styles.metricCard}>
+          <h3 className={styles.metricValue}>{curso.tareasPendientes}</h3>
+          <p className={styles.metricLabel}>Tareas por Entregar</p>
+        </div>
 
-        <main className="student-main">
-          <section className="hero">
-            <h1>¡BIENVENIDO! CONTINÚA TU FORMACIÓN</h1>
-            <p>Avanza en tu curso actual y revisa tus progresos.</p>
+        <div className={styles.metricCard}>
+          <h3 className={styles.metricValue}>{curso.progreso}%</h3>
+          <p className={styles.metricLabel}>Progreso</p>
+        </div>
+      </div>
 
-            <div className="current-course">
-              <h2>MI CURSO ACTUAL</h2>
+      {/* HEADER DEL CURSO */}
+      <div className={styles.header}>
+        <div className={styles.cover}></div>
 
-              <div className="current-course-info">
-                <div>
-                  <strong>{cursoActual.title}</strong>
-                  <p className="small">Progreso general</p>
-                </div>
+        <div className={styles.info}>
+          <h1 className={styles.title}>{curso.titulo}</h1>
+          <p className={styles.progress}>Progreso: {curso.progreso}%</p>
+          <button className={styles.btnPrimary}>Continuar Lección</button>
+        </div>
+      </div>
 
-                <div className="progress-block">
-                  <ProgressBar value={cursoActual.progress} />
-                  <div className="progress-meta">
-                    <span>{cursoActual.progress}%</span>
-                    <button className="btn-primary" onClick={() => handleContinuar(cursoActual.id)}>
-                      CONTINUAR LECCIÓN
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+      {/* MÓDULOS */}
+      <div className={styles.modules}>
+        <h2 className={styles.sectionTitle}>Módulos del Curso</h2>
 
-          <section className="mis-cursos">
-            <h2>Mis Cursos</h2>
+        <div className={styles.moduleCard}>
+          <h3>Módulo 1: Fundamentos</h3>
+          <ul>
+            <li>Lección 1</li>
+            <li>Lección 2</li>
+            <li>Lección 3</li>
+          </ul>
+        </div>
 
-            <div className="cursos-grid">
-              {cursosMock.map((c) => (
-                <CourseCard
-                  key={c.id}
-                  title={c.title}
-                  progress={c.progress}
-                  img={c.img}
-                />
-              ))}
-            </div>
-          </section>
-        </main>
+        <div className={styles.moduleCard}>
+          <h3>Módulo 2: Técnicas Avanzadas</h3>
+          <ul>
+            <li>Lección 1</li>
+            <li>Lección 2</li>
+            <li>Lección 3</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -1,149 +1,110 @@
 "use client";
-import "./login.css";
 
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/useUserStore";
-<<<<<<< HEAD
-import LoginNavbar from "@/components/LoginNavbar"; 
-=======
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
+import "./login.css";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const router = useRouter();
 
-  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [showPass, setShowPass] = useState(false);
+
+  const [errors, setErrors] = useState({});
+
+  function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function validateForm() {
+    const newErrors = {};
+
+    if (!validateEmail(email)) newErrors.email = "Correo inválido";
+    if (pass.length < 6) newErrors.pass = "La contraseña debe tener mínimo 6 caracteres";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
 
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    if (validateForm()) {
+      console.log("Login exitoso");
 
-    if (res?.error) {
-      alert("Credenciales incorrectas");
-      return;
+      // Redirección automática
+      setTimeout(() => {
+        router.push("/"); // o /dashboard si lo prefieres
+      }, 800);
     }
-
-    const session = await fetch("/api/auth/session").then((r) => r.json());
-    const role = session?.user?.role;
-
-    useUserStore.getState().setUser(email, role);
-
-    if (role === "admin") router.push("/dashboard/admin");
-    if (role === "profesor") router.push("/dashboard/profesor");
-    if (role === "estudiante") router.push("/dashboard/estudiante");
   }
 
   return (
-<<<<<<< HEAD
-    <>
-      {/* NAVBAR SOLO CON “INICIAR SESIÓN” */}
-      <LoginNavbar />
+    <div className="login-background">
+      <div className="login-card">
 
-      {/* FONDO DEL LOGIN */}
-      <div className="login-background">
+        <img
+          src="/logos/Logo-ingenieria.png"
+          className="login-logo"
+          alt="Logo"
+        />
 
-        {/* CAJA DEL LOGIN */}
-        <div className="login-container">
+        <h2 className="login-title">Iniciar sesión</h2>
 
-          <h2 className="login-title">INICIA TU SESIÓN</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
 
-          <form onSubmit={handleLogin} className="login-form">
-
-            <div>
-              <label className="login-label">CORREO ELECTRÓNICO</label>
-              <input
-                type="email"
-                placeholder="Ej. juan.perez@empresa.com"
-                className="login-input"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="login-label">CONTRASEÑA</label>
-              <input
-                type="password"
-                className="login-input"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <span className="login-forgot">¿OLVIDASTE TU CONTRASEÑA?</span>
-
-            <button type="submit" className="login-button">
-              INICIAR SESIÓN
-            </button>
-
-          </form>
-
-          <div className="login-cert">
-            <p>Certificaciones de seguridad</p>
-            <div>
-
-            </div>
+          {/* Email */}
+          <div>
+            <label className="login-label">Correo electrónico</label>
+            <input
+              type="email"
+              className={`login-input ${errors.email ? "input-error" : ""}`}
+              placeholder="usuario@ejemplo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {errors.email && <p className="error-text">{errors.email}</p>}
           </div>
 
-        </div>
-      </div>
-    </>
-=======
-    <div className="min-h-screen flex items-center justify-center login-background">
-      <div className="bg-white shadow-lg rounded-lg p-10 w-full max-w-md">
+          {/* Contraseña */}
+          <div>
+            <label className="login-label">Contraseña</label>
 
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          INICIA TU SESIÓN
-        </h2>
+            <div className="password-wrapper">
+              <input
+                type={showPass ? "text" : "password"}
+                className={`login-input ${errors.pass ? "input-error" : ""}`}
+                placeholder="********"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+              />
 
-    <form onSubmit={handleLogin} className="login-form">
+              <span
+                className="toggle-pass"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? "🙈" : "👁️"}
+              </span>
+            </div>
 
-  <div>
-    <label className="login-label">CORREO ELECTRÓNICO</label>
-    <input
-      type="email"
-      placeholder="Ej. juan.perez@empresa.com"
-      className="login-input"
-      onChange={(e) => setEmail(e.target.value)}
-    />
-  </div>
-
-  <div>
-    <label className="login-label">CONTRASEÑA</label>
-    <input
-      type="password"
-      className="login-input"
-      onChange={(e) => setPassword(e.target.value)}
-    />
-  </div>
-
-  <button
-    type="submit"
-    className="w-full bg-[#F57C00] hover:bg-[#EF6C00] text-white font-semibold py-2 rounded-md transition"
-  >
-    INICIAR SESIÓN
-  </button>
-
-  <p className="text-center text-[11px] text-[#F57C00] font-medium cursor-pointer hover:underline">
-    ¿OLVIDASTE TU CONTRASEÑA?
-  </p>
-
-</form>
-
-        <div className="mt-8 text-center text-xs text-gray-500">
-          <p>Certificaciones de seguridad</p>
-          <div className="flex justify-center gap-4 mt-2">
-            <span className="font-bold">PCI DSS</span>
-            <span className="font-bold">SSL</span>
+            {errors.pass && <p className="error-text">{errors.pass}</p>}
           </div>
-        </div>
+          <div className="forgot-link-box">
+          <a href="/auth/forgot-password" className="forgot-link">
+           ¿Olvidaste tu contraseña?
+           </a>
+          </div>
+
+          <button type="submit" className="login-btn">
+            Entrar
+          </button>
+
+        </form>
 
       </div>
     </div>
->>>>>>> c982e1fd69a4f72bbe24196cbe06f93e329bfa46
   );
 }
